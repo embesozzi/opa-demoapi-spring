@@ -2,6 +2,9 @@ package com.identicum.demoapi.spring;
 
 import java.util.Arrays;
 import java.util.List;
+
+import com.identicum.demoapi.opa.voter.OPAVoter;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.AccessDecisionManager;
@@ -12,8 +15,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.*;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-
-import com.identicum.opa.voter.OPAVoter;
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {

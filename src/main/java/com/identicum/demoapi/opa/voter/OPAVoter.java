@@ -1,4 +1,4 @@
-package com.identicum.opa.voter;
+package com.identicum.demoapi.opa.voter;
 
 import java.util.Collection;
 import java.util.Enumeration;
