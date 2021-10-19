@@ -1,0 +1,10 @@
+server:
+  port: 9081
+
+logging:
+  level:
+    root: ERROR
+    org.springframework.web: DEBUG
+    org.springframework.security: DEBUG
+    org.springframework.security.oauth2: DEBUG
+    com.identicum: DEBUG
