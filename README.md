@@ -1,6 +1,8 @@
 # opa-demoapi-spring
 
-Spring API using OPA for authorization
+In this case the API implements AccessDecisionVoter for Spring Security that uses OPA for making authorization decisions. 
+
+The OPA agent based on a rego policy will grant/deny access to the requested endpoint, given the HTTP method, requested path and JWT.
 
 ## Run the API
 
@@ -16,3 +18,9 @@ git clone https://github.com/embesozzi/opa-demoapi-spring.git
 mvn spring-boot:run
 ```
 - You can access to the API on http://hostname:8081/api/v1
+
+### Run as docker componse
+
+```sh
+docker-compose up
+```
