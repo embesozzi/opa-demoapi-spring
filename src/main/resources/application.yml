@@ -1,5 +1,6 @@
 server:
-  port: 9081
+#  port: 9081
+  port: 8088
 
 logging:
   level:

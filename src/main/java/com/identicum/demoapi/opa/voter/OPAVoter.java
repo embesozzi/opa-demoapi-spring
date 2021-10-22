@@ -5,6 +5,8 @@ import java.util.Enumeration;
 import java.util.Map;
 import java.util.HashMap;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.ConfigAttribute;
@@ -15,6 +17,9 @@ import org.springframework.web.client.RestTemplate;
 public class OPAVoter implements AccessDecisionVoter<Object> {
 
     private final String opaUrl;
+
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
+
 
     public OPAVoter(String opaUrl) {
         this.opaUrl = opaUrl;
@@ -53,9 +58,12 @@ public class OPAVoter implements AccessDecisionVoter<Object> {
         input.put("path", path);
         input.put("headers", headers);
 
+        log.debug("Call OPA uri: {} with parameters: {}", this.opaUrl, input );
         RestTemplate client = new RestTemplate();
         HttpEntity<?> request = new HttpEntity<>(new OPADataRequest(input));
         OPADataResponse response = client.postForObject(this.opaUrl, request, OPADataResponse.class);
+
+        log.debug("OPA response: {}",  response);
 
         if (response == null || !response.getResult()) {
             return ACCESS_DENIED;

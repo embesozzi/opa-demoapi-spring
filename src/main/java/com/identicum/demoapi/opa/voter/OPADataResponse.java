@@ -1,4 +1,4 @@
-package com.identicum.opa.voter;
+package com.identicum.demoapi.opa.voter;
 
 public class OPADataResponse {
 
