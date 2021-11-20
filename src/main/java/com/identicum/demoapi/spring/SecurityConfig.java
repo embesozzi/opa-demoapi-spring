@@ -5,6 +5,9 @@ import java.util.List;
 
 import com.identicum.demoapi.opa.voter.OPAVoter;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.AccessDecisionManager;
@@ -19,6 +22,17 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Value("${opa.url:http://opa:8181/v1/data}")
+    private String opaUrl;
+
+    @Value("${opa.bundle:http/authz}")
+    private String opaBundle;
+
+    @Value("${opa.rule:allow}")
+    private String opaRule;
+    
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().authorizeRequests().anyRequest().authenticated().accessDecisionManager(accessDecisionManager());
@@ -26,8 +40,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public AccessDecisionManager accessDecisionManager() {
-        List<AccessDecisionVoter<? extends Object>> decisionVoters = Arrays
-                .asList(new OPAVoter("http://opa:8181/v1/data/http/authz/allow"));
+        StringBuilder opaUrlBuilder = 
+            new StringBuilder(opaUrl).append("/").append(opaBundle).append("/").append(opaRule);
+        log.debug("Configuring with OPA endpoint: {}", opaUrlBuilder.toString());
+        
+        List<AccessDecisionVoter<? extends Object>> decisionVoters = 
+            Arrays.asList(new OPAVoter(opaUrlBuilder.toString()));
         return new UnanimousBased(decisionVoters);
     }
 

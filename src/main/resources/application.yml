@@ -1,6 +1,10 @@
 server:
-#  port: 9081
-  port: 8088
+  port: 8089
+
+opa:
+  url: http://opa:8181/v1/data
+  bundle: http/authz
+  rule: allow
 
 logging:
   level:
